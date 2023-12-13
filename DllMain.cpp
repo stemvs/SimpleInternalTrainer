@@ -12,10 +12,10 @@ static bool bInvincibility = false;
 static bool bOneShot = false;
 static damage damageHookRet;
 
-void __declspec(naked) damageHook(void*, int damage, int, ACObjTypes::Player* attacker) { //custom prologue & epilogue because __thiscall
+void __declspec(naked) damageHook(void* retAddr, int damage, int, ACObjTypes::Player* attacker) { //custom prologue & epilogue because __thiscall
 	__asm {
-		push ecx;
-		push ebp;
+		push ecx; // store this pointer
+		push ebp; // set function scope
 		mov ebp, esp;
 		sub esp, __LOCAL_SIZE
 	}
@@ -33,9 +33,9 @@ void __declspec(naked) damageHook(void*, int damage, int, ACObjTypes::Player* at
 	}
 
 	__asm {
-		mov esp, ebp;
+		mov esp, ebp; // restore stack
 		pop ebp;
-		pop ecx;
+		pop ecx; // this
 	}
 	__asm jmp damageHookRet;
 }
