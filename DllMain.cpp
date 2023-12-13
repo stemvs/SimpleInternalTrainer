@@ -6,7 +6,7 @@
 #include "Hook.h"
 #include "AC.h"
 
-typedef int (__thiscall *damage)(DWORD ecx, DWORD a1, DWORD a2);
+typedef int (__thiscall *damage)(DWORD a1, DWORD a2);
 
 static bool bInvincibility = false;
 static bool bOneShot = false;
