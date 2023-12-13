@@ -80,7 +80,6 @@ DWORD WINAPI MainThread(HMODULE hModule) {
 		if (GetAsyncKeyState(VK_NUMPAD4) & 1) {//^^
 			ACObjTypes::WeaponData* awjeif = ACConstants::WeaponData;
 			for (int i = 0; i < 9; i++) {
-				awjeif[i].recoil = 0;
 				((ACObjTypes::WeaponData*)((DWORD)awjeif + i * sizeof(awjeif)))->recoil = 0;
 			}
 		}
