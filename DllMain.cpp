@@ -12,7 +12,7 @@ static bool bInvincibility = false;
 static bool bOneShot = false;
 static damage damageHookRet;
 
-void __declspec(naked) damageHook(void*, int damage, int, ACObjTypes::Player* attacker) {
+void __declspec(naked) damageHook(void*, int damage, int, ACObjTypes::Player* attacker) { //custom prologue & epilogue because __thiscall
 	__asm {
 		push ecx;
 		push ebp;
