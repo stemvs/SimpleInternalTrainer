@@ -10,6 +10,7 @@ void Mem::Detour32(void* toHook, void* hookFunc, size_t size) {
 	*buffPtr = 0xE9;
 	*(DWORD*)(buffPtr + 1) = (DWORD)hookFunc - (DWORD)toHook - 5;
 	Patch(toHook, buffPtr, size);
+	delete[] buffPtr;
 }
 
 void* Mem::TrampolineHook32::Hook(void* toHook, void* hookFunc, size_t size) {
