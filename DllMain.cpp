@@ -58,6 +58,7 @@ DWORD WINAPI MainThread(HMODULE hModule) {
 	std::cout << "Numpad 4: No Recoil\n";
 	std::cout << "Numpad 5: 1337 Kills\n";
 	std::cout << "Numpad 6: Invisibility\n";
+	std::cout << "Numpad 7: Dual Pistols\n";
 
 	std::cout << "Del: Exit\n";
 
@@ -88,6 +89,9 @@ DWORD WINAPI MainThread(HMODULE hModule) {
 		}
 		if (GetAsyncKeyState(VK_NUMPAD6) & 1) {
 			localP->clipThing ^= 0x01000000;
+		}
+		if (GetAsyncKeyState(VK_NUMPAD7) & 1) {
+			localP->dualPistols ^= 1;
 		}
 		if (GetAsyncKeyState(VK_DELETE) & 1) {
 			damageTHook.Unhook();
