@@ -70,7 +70,7 @@ DWORD WINAPI MainThread(HMODULE hModule) {
 			bOneShot = !bOneShot;
 		}
 		if (GetAsyncKeyState(VK_NUMPAD2) & 1) { // should patch instructions but it's late
-			localP->primaryAmmo = INT_MAX;
+			*localP->currentWeapon->weaponAmmo = INT_MAX;
 			localP->pistolAmmo = INT_MAX;
 			localP->dualPAmmo = INT_MAX;
 		}
