@@ -79,11 +79,8 @@ DWORD WINAPI MainThread(HMODULE hModule) {
 		}
 		if (GetAsyncKeyState(VK_NUMPAD4) & 1) {//^^
 			ACObjTypes::WeaponData* awjeif = ACConstants::WeaponData;
-			for (int i = 0; i < 9; i++) { // todo: prevent bots from using hacks
+			for (int i = 0; i < 9; i++) { // todo: prevent bots from using gun hacks
 				awjeif[i].recoil = 0;
-				awjeif[i].isAutomatic = 1;
-				awjeif[i].reloadTimer = 0;
-				awjeif[i].shootTimer = 0;
 			}
 		}
 		if (GetAsyncKeyState(VK_NUMPAD5) & 1) {
@@ -96,7 +93,6 @@ DWORD WINAPI MainThread(HMODULE hModule) {
 			localP->dualPistols ^= 1;
 		}
 		if (GetAsyncKeyState(VK_NUMPAD8) & 1) {
-			bReverseDamage = !bReverseDamage;
 		}
 		if (GetAsyncKeyState(VK_DELETE) & 1) {
 			damageTHook.Unhook();
