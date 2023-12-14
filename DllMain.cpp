@@ -10,9 +10,10 @@ typedef int (__thiscall *damage)(DWORD ecx, DWORD a1, DWORD a2);
 
 static bool bInvincibility = false;
 static bool bOneShot = false;
+static bool bReverseDamage = false;
 static damage damageHookRet;
 
-void __declspec(naked) damageHook(void*, int damage, int, ACObjTypes::Player* attacker) {
+void __declspec(naked) damageHook(void*, int damage, int, ACObjTypes::Player* attacker, ACObjTypes::Player* attacked) {
 	__asm {
 		push ecx;
 		push ebp;
@@ -28,10 +29,10 @@ void __declspec(naked) damageHook(void*, int damage, int, ACObjTypes::Player* at
 	if (bInvincibility && _p == *ACConstants::LocalPlayerPtr) {
 		damage = 0;
 	}
-	else if (bOneShot && attacker == *ACConstants::LocalPlayerPtr) {
+	if (bOneShot && attacker == *ACConstants::LocalPlayerPtr) {
 		damage = 0x7FFFFFFF;
 	}
-
+	hookExit:
 	__asm {
 		mov esp, ebp;
 		pop ebp;
@@ -79,9 +80,11 @@ DWORD WINAPI MainThread(HMODULE hModule) {
 		}
 		if (GetAsyncKeyState(VK_NUMPAD4) & 1) {//^^
 			ACObjTypes::WeaponData* awjeif = ACConstants::WeaponData;
-			for (int i = 0; i < 9; i++) {
+			for (int i = 0; i < 9; i++) { // todo: prevent bots from using hacks
 				awjeif[i].recoil = 0;
-				((ACObjTypes::WeaponData*)((DWORD)awjeif + i * sizeof(awjeif)))->recoil = 0;
+				awjeif[i].isAutomatic = 1;
+				awjeif[i].reloadTimer = 0;
+				awjeif[i].shootTimer = 0;
 			}
 		}
 		if (GetAsyncKeyState(VK_NUMPAD5) & 1) {
@@ -92,6 +95,9 @@ DWORD WINAPI MainThread(HMODULE hModule) {
 		}
 		if (GetAsyncKeyState(VK_NUMPAD7) & 1) {
 			localP->dualPistols ^= 1;
+		}
+		if (GetAsyncKeyState(VK_NUMPAD8) & 1) {
+			bReverseDamage = !bReverseDamage;
 		}
 		if (GetAsyncKeyState(VK_DELETE) & 1) {
 			damageTHook.Unhook();
