@@ -79,7 +79,7 @@ DWORD WINAPI MainThread(HMODULE hModule) {
 		}
 		if (GetAsyncKeyState(VK_NUMPAD4) & 1) {//^^
 			ACObjTypes::WeaponData* awjeif = ACConstants::WeaponData;
-			for (int i = 0; i < 9; i++) { // todo: prevent bots from using gun hacks
+			for (int i = 0; i < 9; i++) {
 				awjeif[i].recoil = 0;
 			}
 		}
